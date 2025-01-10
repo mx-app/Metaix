@@ -6,8 +6,8 @@
   <title>بروفيل المستخدم</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/euda"></script>
-  <script> eruda.init(); </script>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
   <style>
     body {
       background-color: black;
@@ -70,7 +70,7 @@
 <body>
 
 <header>
-  <h1>Profile</h1>
+  <h1>Profile </h1>
 </header>
 
 <div class="profile-container">
@@ -82,33 +82,40 @@
 
 <script>
   window.onload = () => {
-  const tg = window.Telegram.WebApp;
+    const tg = window.Telegram.WebApp;
 
-  // طباعة البيانات للمعاينة
-  console.log("Telegram User Data:", tg.initDataUnsafe);
+    // عرض بيانات المستخدم
+    const user = tg.initDataUnsafe?.user;
 
-  const user = tg.initDataUnsafe?.user;
+    if (user) {
+      // التحقق من الصورة الشخصية
+      if (user.photo_url) {
+        fetch(user.photo_url)
+          .then(response => {
+            if (response.ok) {
+              document.getElementById('user-photo').src = user.photo_url;
+            } else {
+              console.warn("Photo URL is not accessible");
+              document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching photo:", error);
+            document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+          });
+      } else {
+        document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+      }
 
-  if (user) {
-    // التحقق من الصورة
-    if (user.photo_url) {
-      console.log("Photo URL:", user.photo_url);
-      document.getElementById('user-photo').src = user.photo_url;
+      // عرض الاسم واليوزرنيم
+      document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
+      document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
+      document.getElementById('user-id').textContent = user.id || "غير معروف";
     } else {
-      console.warn("No photo_url available");
-      document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+      console.error("لا يمكن جلب بيانات المستخدم!");
+      alert("لا يمكن جلب بيانات المستخدم!");
     }
-
-    // عرض الاسم واليوزرنيم
-    document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
-    document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
-    document.getElementById('user-id').textContent = user.id || "غير معروف";
-  } else {
-    console.error("لا يمكن جلب بيانات المستخدم!");
-    alert("لا يمكن جلب بيانات المستخدم!");
-  }
-};
-
+  };
 
   // نسخ الأيدي إلى الحافظة
   function copyId() {
@@ -118,7 +125,6 @@
     });
   }
 </script>
-
 
 </body>
 </html>
