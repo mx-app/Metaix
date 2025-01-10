@@ -35,7 +35,7 @@ button, input, select, textarea, img, a {
  
 
     body {
-      background-color: black;
+      background: linear-gradient(to bottom, #181818, #000); /* تدرج من اللون الرمادي إلى الشفاف */
       color: white;
       font-family: 'Rubik', sans-serif;
       margin: 0;
@@ -43,7 +43,6 @@ button, input, select, textarea, img, a {
     }
 
     header {
-      background: linear-gradient(to bottom, #181818, transparent); /* تدرج من اللون الرمادي إلى الشفاف */
       padding: 15px;
       text-align: center;
       color: white;
@@ -105,8 +104,7 @@ button, input, select, textarea, img, a {
     transform: translateX(-50%);
     z-index: 100;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    background-color: #181818;
 }
 
 .menu-list {
