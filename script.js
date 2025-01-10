@@ -1,4 +1,6 @@
 const uiElements = {
+    userTelegramNameDisplay: document.getElementById('userTelegramName'),
+    userTelegramIdDisplay: document.getElementById('userTelegramId'),
     purchaseNotification: document.getElementById('purchaseNotification'),
     copyInviteNotification: document.getElementById('copyInviteNotification'),
     navButtons: document.querySelectorAll('.menu button'),
@@ -11,6 +13,62 @@ const uiElements = {
     inviteFriendsBtn: document.getElementById('inviteFriendsBtn'),
     copyInviteLinkBtn: document.getElementById('copyInviteLinkBtn'),
 };
+
+
+//تحديث البيانت من الواجهه الي قاعده البيانات 
+async function updateGameStateInDatabase(updatedData) {
+    const userId = uiElements.userTelegramIdDisplay.innerText;
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .update(updatedData) // البيانات الجديدة
+            .eq('telegram_id', userId); // شرط التحديث
+
+        if (error) {
+            console.error('Error updating game state in Supabase:', error);
+            return false;
+        }
+
+        console.log('Game state updated successfully in Supabase:', data);
+        return true;
+    } catch (err) {
+        console.error('Unexpected error while updating game state:', err);
+        return false;
+    }
+}
+
+
+
+//تحديث قاعده البيانات 
+async function loadGameState() {
+    const userId = uiElements.userTelegramIdDisplay.innerText;
+
+    try {
+        console.log('Loading game state from Supabase...');
+        const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('telegram_id', userId)
+            .single();
+
+        if (error) {
+            console.error('Error loading game state from Supabase:', error.message);
+            return;
+        }
+
+        if (data) {
+            console.log('Loaded game state:', data); // عرض البيانات المحملة
+            gameState = { ...gameState, ...data };
+            updateUI();
+        } else {
+            console.warn('No game state found for this user.');
+        }
+    } catch (err) {
+        console.error('Unexpected error:', err);
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const isBanned = await checkAndHandleBan();
