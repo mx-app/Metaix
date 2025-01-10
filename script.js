@@ -1,42 +1,33 @@
-function showPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-  document.getElementById(pageId).classList.add("active");
-}
+window.onload = () => {
+    const tg = window.Telegram.WebApp;
 
-function selectPackage(packageType) {
-  const selectedPackage = document.querySelector(`.package[data-price="${packageType === 'small' ? 100 : packageType === 'medium' ? 300 : 500}"]`);
-  const price = selectedPackage.dataset.price;
-  localStorage.setItem("selectedPrice", price);
-  showPage("enterDetails");
-}
+    // عرض بيانات المستخدم
+    const user = tg.initDataUnsafe?.user;
 
-document.getElementById("adDetailsForm").addEventListener("input", function() {
-  const appName = document.getElementById("appName").value;
-  const appLink = document.getElementById("appLink").value;
-  const adDescription = document.getElementById("adDescription").value;
-  const continueButton = document.getElementById("continueButton");
-  continueButton.disabled = !(appName && appLink && adDescription);
-});
+    if (user) {
+      // التحقق من الصورة الشخصية
+      if (user.photo_url) {
+        // إذا كانت صورة الملف الشخصي موجودة، قم بعرضها مباشرة
+        document.getElementById('user-photo').src = user.photo_url;
+      } else {
+        // إذا لم تكن الصورة متوفرة، استخدم صورة افتراضية
+        document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+      }
 
-function showPreview() {
-  event.preventDefault();
-  document.getElementById("previewAppName").textContent = document.getElementById("appName").value;
-  document.getElementById("previewAppLink").textContent = document.getElementById("appLink").value;
-  document.getElementById("previewAdDescription").textContent = document.getElementById("adDescription").value;
-  showPage("previewTask");
-}
+      // عرض الاسم واليوزرنيم
+      document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
+      document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
+      document.getElementById('user-id').textContent = user.id || "غير معروف";
+    } else {
+      console.error("لا يمكن جلب بيانات المستخدم!");
+      alert("لا يمكن جلب بيانات المستخدم!");
+    }
+  };
 
-function showPayment() {
-  const price = localStorage.getItem("selectedPrice");
-  document.getElementById("price").textContent = price;
-  showPage("paymentPage");
-}
-
-function goBack(pageId) {
-  showPage(pageId);
-}
-
-function processPayment() {
-  alert("الدفع جارٍ المعالجة...");
-  // هنا تضيف مكتبة Ton Connect
-}
+  // نسخ الأيدي إلى الحافظة
+  function copyId() {
+    const userId = document.getElementById('user-id').textContent;
+    navigator.clipboard.writeText(userId).then(() => {
+      alert('تم نسخ الأيدي!');
+    });
+  }
