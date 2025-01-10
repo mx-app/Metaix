@@ -1,3 +1,21 @@
+const uiElements = {
+    purchaseNotification: document.getElementById('purchaseNotification'),
+    copyInviteNotification: document.getElementById('copyInviteNotification'),
+    navButtons: document.querySelectorAll('.menu button'),
+    contentScreens: document.querySelectorAll('.screen-content'),
+    splashScreen: document.querySelector('.splash-screen'),
+    mainContainer: document.querySelector('.container'),
+    userTelegramNameDisplay: document.getElementById('userTelegramName'),
+    userTelegramIdDisplay: document.getElementById('userTelegramId'),
+    friendsListDisplay: document.getElementById('friendsList') || { innerHTML: '' },
+    inviteFriendsBtn: document.getElementById('inviteFriendsBtn'),
+    copyInviteLinkBtn: document.getElementById('copyInviteLinkBtn'),
+
+};
+
+
+
+
 window.onload = () => {
     const tg = window.Telegram.WebApp;
 
