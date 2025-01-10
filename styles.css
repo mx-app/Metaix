@@ -35,13 +35,46 @@ button, input, select, textarea, img, a {
  
 
     body {
-      background: linear-gradient(to bottom, #181818, #000); /* تدرج من اللون الرمادي إلى الشفاف */
-      color: white;
-      font-family: 'Rubik', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    margin: 0;
+    font-family: 'Rubik',sans-serif ;
+    font-weight: 700;
+   /* font-family: 'Raleway', sans-serif;
+    font-style: normal;*/
+   /* font-style: italic;*/
+    background-color: #181818;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.5s, color 0.5s;
+}
 
+.container {
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #181818, #000); /* تدرج من اللون الرمادي إلى الشفاف */
+
+}
+ 
+ 
+ 
+
+ @media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+ 
     header {
       padding: 15px;
       text-align: center;
@@ -98,7 +131,7 @@ button, input, select, textarea, img, a {
     height: 60px;
     position: fixed;
     bottom: 32px;
-    border-radius: 25px;
+    border-radius: 35px;
     width: 89.5%;
     left: 50%;
     transform: translateX(-50%);
