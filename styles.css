@@ -12,6 +12,28 @@ button, input, select, textarea, img, a {
 }
 
 
+.hidden {
+  display: none;
+}
+ 
+.screen-content {
+    flex: 1;
+    display: none;
+    padding: 10px;
+    position: relative;
+    background: inherit;
+    overflow: hidden;
+}
+
+.screen-content.scrollable {
+    overflow-y: auto;
+}
+
+.screen-content.active {
+    display: block;
+}
+ 
+
     body {
       background-color: black;
       color: white;
