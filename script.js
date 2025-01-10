@@ -60,7 +60,7 @@ async function loadGameState() {
         if (data) {
             console.log('Loaded game state:', data); // عرض البيانات المحملة
             gameState = { ...gameState, ...data };
-            updateUI();
+            //updateUI();
         } else {
             console.warn('No game state found for this user.');
         }
@@ -91,10 +91,8 @@ async function initializeApp() {
        if (uiElements.mainContainer) uiElements.mainContainer.style.display = 'flex';
     }, 2000);
         
-        // إعداد واجهة المستخدم
-        updateUI();
+        //updateUI();
         registerEventHandlers();
-        startEnergyRecovery();
         
         console.log('App initialized successfully.');
     } catch (error) {
@@ -221,15 +219,6 @@ window.onload = () => {
       alert("لا يمكن جلب بيانات المستخدم!");
     }
   };
-
-  // نسخ الأيدي إلى الحافظة
-  function copyId() {
-    const userId = document.getElementById('user-id').textContent;
-    navigator.clipboard.writeText(userId).then(() => {
-      alert('تم نسخ الأيدي!');
-    });
-  }
-
 
 // القائمه السفليه
 document.querySelectorAll('button[data-target]').forEach(button => {
@@ -426,7 +415,7 @@ async function claimTaskReward(taskId, reward, button) {
         // تحديث واجهة المستخدم
         button.textContent = '✓';
         button.disabled = true;
-        updateUI();
+       // updateUI();
         showNotificationWithStatus(uiElements.purchaseNotification, `Successfully claimed ${reward} coins!`, 'win');
 
         // تحديث قاعدة البيانات
@@ -629,7 +618,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // مشاركة الدعوة عبر Telegram
 function openTelegramChat() {
-    const inviteLink = `https://t.me/share/url?text=Join Saw Token Game and earn 5,000 $SAW!&url=https://t.me/SAWCOIN_BOT?start=${uiElements.userTelegramIdDisplay?.innerText || ''}`;
+    const inviteLink = `https://t.me/share/url?text=Join Metaix Game and earn 5,000 $METIX!&url=https://t.me/SAWCOIN_BOT?start=${uiElements.userTelegramIdDisplay?.innerText || ''}`;
     window.open(inviteLink, '_blank');
 }
 
@@ -644,6 +633,14 @@ function registerEventHandlers() {
         });
     }
 } 
+
+
+function copyId() {
+    const userId = document.getElementById('user-id').textContent;
+    navigator.clipboard.writeText(userId).then(() => {
+      alert('Hands copied');
+    });
+  }
 
 
 
