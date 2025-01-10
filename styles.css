@@ -1,4 +1,3 @@
-/* إزالة تأثير التركيز */
 button, input, select, textarea, img, a {
     outline: none;
     box-shadow: none;
@@ -39,6 +38,7 @@ body {
 }
 
 .page {
+  background-color: #000;
   display: none;
 }
 
@@ -61,7 +61,7 @@ body {
 
 button {
   padding: 10px 15px;
-  background: #007bff;
+  background: #2D83EC;
   color: #fff;
   border: none;
   border-radius: 5px;
