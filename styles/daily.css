@@ -44,6 +44,7 @@
     padding: 10px;
     margin: 10px auto;
     font-size: 0.85rem; 
+    border-radius: 35px;
     background-color: #181818;
     box-sizing: border-box; /* لحساب الحواف ضمن الأبعاد */
     overflow: hidden;
@@ -154,7 +155,7 @@
     flex-direction: column;  /* وضع النص والصورة عموديًا */
     align-items: center;  /* محاذاة العناصر عموديًا في المنتصف */
     justify-content: flex-start;  /* المحاذاة بداية من الأعلى */
-    border-radius: 20px;
+    border-radius: 35px;
     font-size: 15px;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.9);
