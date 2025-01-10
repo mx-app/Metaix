@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بروفيل المستخدم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Rubik', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #181818;
+      padding: 10px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .profile-container img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border: 3px solid #181818;
+    }
+
+    .profile-container .username {
+      margin-top: 10px;
+      font-size: 22px;
+    }
+
+    .profile-container .user-username {
+      font-size: 18px;
+      color: #888;
+    }
+
+    .profile-container .user-id {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #bbb;
+      background-color: #181818;
+      padding: 5px 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .profile-container .user-id:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>بروفيل المستخدم</h1>
+</header>
+
+<div class="profile-container">
+  <img src="https://via.placeholder.com/150" alt="صورة المستخدم" id="user-photo">
+  <div class="username" id="username">اسم المستخدم</div>
+  <div class="user-username" id="user-username">اليوز نيم</div>
+  <div class="user-id" id="user-id" onclick="copyId()">123456789</div>
+</div>
+
+<script>
+  // التأكد من أن المكتبة تعمل
+  const tg = window.Telegram.WebApp;
+
+  // عند تحميل الصفحة، جلب بيانات المستخدم
+  window.onload = () => {
+    const user = tg.initDataUnsafe?.user;
+
+    if (user) {
+      // عرض صورة المستخدم
+      document.getElementById('user-photo').src = user.photo_url || "https://via.placeholder.com/150";
+      document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
+      document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
+      document.getElementById('user-id').textContent = user.id || "غير معروف";
+    } else {
+      alert("لا يمكن جلب بيانات المستخدم!");
+    }
+  };
+
+  // نسخ الأيدي إلى الحافظة
+  function copyId() {
+    const userId = document.getElementById('user-id').textContent;
+    navigator.clipboard.writeText(userId).then(() => {
+      alert('تم نسخ الأيدي!');
+    });
+  }
+</script>
+
+</body>
+</html>
