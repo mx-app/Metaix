@@ -1,0 +1,221 @@
+.description-taskk {
+    width: 100%;
+    text-align: left;
+    padding-top: 3px;
+    z-index: 50;
+    margin-top: 3px;
+    margin-left: 16px;
+    position: relative; /* لإبقاء النص في موضعه فوق الصورة */
+}
+
+.taskk-title {
+    font-size: 24px;
+    color: #fff; /* تأكد من أن النص يظهر بوضوح على الصورة */
+    z-index: 100; /* تأكد من أن النص فوق الصورة */
+    animation: popIn 0.4s ease forwards;
+}
+
+.TASKS-image {
+    position: absolute;
+    top: 30px;
+    left: 83%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    z-index: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
+                 0 -1px 2px rgba(255, 255, 255, 0.5); /* تأثير الظلال للأيقونة */
+    stroke: url(#gradient); /* تطبيق تدرج على الحواف (الخطوط) */
+} 
+
+.size-6 {
+    width: 18px;
+    height: 18px;
+    color: #2D83EC;  /* اللون الأخضر لعلامة الصح */
+}
+
+.size-6 path {
+    stroke-width: 2; /* زيادة سمك الخط */
+} 
+
+.arrow {
+    width: 18px;
+    height: 18px;
+    color: #808080;
+}
+
+
+.loading-spinner {
+    border: 2.5px solid #3592e7;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+ 
+.task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* موازاة المحتوى أفقيًا في المنتصف */
+    justify-content: flex-start; /* لا تغيير في التمركز الرأسي */
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto; /* لتوسيط الحاوية أفقيًا */
+}
+ 
+.task-button:disabled {
+    background-color: none;
+    cursor: not-allowed;
+} 
+
+.task-item button.inactive {
+    background-color: #9f0000;
+}
+
+.task-item button.claimed {
+    background-color: #000;
+    color: #fff;
+}
+ 
+.task-image {
+    width: 70px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.task-item {
+    width: 95%;
+    height: 60px;
+    max-width: 400px;
+    margin: 12px 0;
+    border-radius: 20px; 
+    border-radius: 20px; 
+    /*background-color: #101010;*/
+    background:linear-gradient(135deg,#2D83EC,#101010);
+    border-bottom: 1px solid #1a1a1a;
+    border-left: 1px solid #1a1a1a; 
+    border-right: 1px solid #1a1a1a; 
+    box-sizing: border-box;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}  
+
+.task-item img {
+    object-fit: cover; /* لتغطية المساحة بالكامل */
+    border-radius: 50%; /* جعل الصورة تتبع نفس الحواف الدائرية */
+} 
+
+.task-img {
+    width: 38px;
+    height: auto;
+    margin-bottom: 3px; /* إضافة مسافة أسفل الصورة */
+    border-radius: 50%;
+    margin-left: 10px;
+    border: 1px solid #161616; 
+    padding: 2px;
+    object-fit: cover;
+}
+ 
+ 
+
+.task-item button {
+    background-color: rgba(255, 255, 255, 0.001);
+    color: #808080;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 20%;
+    height: 30px;
+    transition: background-color 0.3s;
+    /*border: 1px solid #343434;*/
+    font-weight: bold;
+    font-size: 13px;
+    margin-right: 12px;
+    z-index: 100;
+    margin-left: auto; /* يجعل الزر في الجهة اليمنى */
+    text-align: right; 
+} 
+
+.task-item p {
+   /* margin: 5px 0;*/
+    padding: 0;
+    width: 100%;
+    text-align: left; /* محاذاة الوصف في المنتصف */
+    color: #fff;
+    font-size: 0.85rem; 
+   /* border-bottom: 1px solid #343434;*/
+}
+
+/*.task-reward-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}*/
+
+.reward-coin-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 3px;
+}
+ 
+.task-reward {
+    color: #808080;
+    font-size: 0.7rem;
+    text-align: left; 
+}
+
+/*.task-reward-container {
+    position: absolute;
+    bottom: 34%;
+    right: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.005);
+    padding: 5px;
+}*/
+ 
+.task-reward-container {
+    position: absolute;
+    top: 55%; /* مسافة من أعلى الحاوية */
+    left: 65px; /* مسافة من يمين الحاوية */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   /* background-color: rgba(0, 0, 0, 1);*//* خلفية شفافة */
+    padding: 5px;
+} 
+
+.info-task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0;
+    margin-bottom: 18px;
+    margin-left: 18px;
+} 
+
+/*#task-earn {
+    height: 90%;
+    width: 100%;
+    max-width: 400px;
+    overflow-y: auto; 
+    border-radius: 10px;
+}*/
