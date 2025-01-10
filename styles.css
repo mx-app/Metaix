@@ -69,3 +69,120 @@ button, input, select, textarea, img, a {
     .profile-container .user-id:hover {
       background-color: #333;
     }
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    position: fixed;
+    bottom: 32px;
+    border-radius: 25px;
+    width: 89.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.menu-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin: 10px auto; 
+   /* border-top: 1px solid #1c1c1c;*/
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+   /* background-color: rgba(255, 255, 255, 0.00009);
+    backdrop-filter: blur(5px);*/
+    border-radius: 20px;
+    width: 95%;
+    z-index: 100;
+}
+ 
+.menu-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    position: relative;
+}
+
+.menu-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px auto;
+    transition: all 0.3s ease;
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item i {
+    font-size: 1.3rem;
+    color: #808080;
+    transition: color 0.3s ease;
+}
+
+.menu-item.active .icon-wrapper {
+   /* background: linear-gradient(45deg, #2D83EC, #1AC9FF);*/
+    background-color: #2D83EC;
+    box-shadow: 0 0 2px rgba(45, 131, 236, 0.7), 
+                inset 0 0 2px rgba(255, 255, 255, 0.5), 
+                inset 0 0 3px rgba(45, 131, 236, 0.8); /* تأثير الإضاءة الداخلية */
+    position: relative;
+    transform: scale(1.1); /* تكبير بسيط للدائرة لإبراز التأثير */
+}
+
+.menu-item.active i {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
+                 0 -1px 2px rgba(255, 255, 255, 0.5); /* تأثير الظلال للأيقونة */
+}
+  
+.menu-label.active {
+    color: #fff;
+}
+
+.menu-label {
+    position: absolute;
+    top: 60px; /* إخراج النص من حدود القائمة */
+    font-size: 12px;
+    color: #808080;
+    margin-top: 5px; 
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.menu button.active img {
+   opacity: 1;
+    position: relative;
+    z-index: 2; /* وضع الصورة فوق الخلفية */
+} 
+
+.menu button:hover::before {
+    opacity: 1;  /* جعل الخط مرئي عند التمرير أو عندما يكون الزر نشطًا */
+} 
+
+.menu-item.active i {
+    color: #fff;
+}
+
