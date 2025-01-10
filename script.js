@@ -110,17 +110,22 @@ async function fetchUserDataFromTelegram() {
         const telegramApp = window.Telegram.WebApp;
         telegramApp.ready();
 
-        const userTelegramId = telegramApp.initDataUnsafe.user?.id;
-        const userTelegramName = telegramApp.initDataUnsafe.user?.username || `user_${userTelegramId}`;
-        const isPremium = telegramApp.initDataUnsafe.user?.is_premium;
+        const user = telegramApp.initDataUnsafe.user;
+        const userTelegramId = user?.id;
+        const userTelegramName = user?.username || `user_${userTelegramId}`;
+        const isPremium = user?.is_premium;
 
         if (!userTelegramId) {
             throw new Error("Failed to fetch Telegram user ID.");
         }
 
         // تحديث واجهة المستخدم
-        uiElements.userTelegramIdDisplay.innerText = userTelegramId;
-        uiElements.userTelegramNameDisplay.innerText = userTelegramName;
+        if (uiElements?.userTelegramIdDisplay) {
+            uiElements.userTelegramIdDisplay.innerText = userTelegramId;
+        }
+        if (uiElements?.userTelegramNameDisplay) {
+            uiElements.userTelegramNameDisplay.innerText = userTelegramName;
+        }
 
         // عرض الاسم المختصر
         const userNameElement = document.getElementById("userName");
@@ -136,8 +141,14 @@ async function fetchUserDataFromTelegram() {
         const premiumStatusElement = document.getElementById('userPremiumStatus');
         if (premiumStatusElement) {
             premiumStatusElement.innerHTML = isPremium
-                ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" /><path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" /><path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" /><path d="M8.56 20.31a9 9 0 0 0 3.44 .69" /><path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" /><path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" /><path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" /><path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" /><path d="M9 12l2 2l4 -4" /></svg>`
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 12l2 2l4 -4" /></svg>`
                 : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="Error-mark"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>`;
+        }
+
+        // عرض الصورة الشخصية
+        const userPhotoElement = document.getElementById('user-photo');
+        if (userPhotoElement) {
+            userPhotoElement.src = user?.photo_url || "https://via.placeholder.com/150";
         }
 
         // التحقق من تسجيل المستخدم
@@ -192,33 +203,6 @@ async function ensureUserAuthenticationAndDatabase(telegramId, userName) {
         throw error;
     }
 }
-
-
-window.onload = () => {
-    const tg = window.Telegram.WebApp;
-
-    // عرض بيانات المستخدم
-    const user = tg.initDataUnsafe?.user;
-
-    if (user) {
-      // التحقق من الصورة الشخصية
-      if (user.photo_url) {
-        // إذا كانت صورة الملف الشخصي موجودة، قم بعرضها مباشرة
-        document.getElementById('user-photo').src = user.photo_url;
-      } else {
-        // إذا لم تكن الصورة متوفرة، استخدم صورة افتراضية
-        document.getElementById('user-photo').src = "https://via.placeholder.com/150";
-      }
-
-      // عرض الاسم واليوزرنيم
-      document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
-      document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
-      document.getElementById('user-id').textContent = user.id || "غير معروف";
-    } else {
-      console.error("لا يمكن جلب بيانات المستخدم!");
-      alert("لا يمكن جلب بيانات المستخدم!");
-    }
-  };
 
 // القائمه السفليه
 document.querySelectorAll('button[data-target]').forEach(button => {
