@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>بروفيل المستخدم</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-  <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-  <script src="Scripts/css.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-  <script>eruda.init();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> METIX </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+    <script src="Scripts/css.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+        eruda.init();
+    </script>
 </head>
 <body>
 
-<div class="container">
-<div id="mainPage" class="screen-content active">
- <header>
-  <div class="Profile"> Profile </div>
- </header>
-<div class="profile-container">
-  <img src="https://via.placeholder.com/150" alt="صورة المستخدم" id="user-photo">
-  <div class="username" id="username">اسم المستخدم</div>
-  <div class="user-username" id="user-username">اليوز نيم</div>
-  <div class="user-id" id="user-id" onclick="copyId()">123456789</div>
-</div>
-</div>
+    <div class="container">
+        <div id="mainPage" class="screen-content active">
+            <header>
+                <div class="Profile"> Profile </div>
+            </header>
+            <div class="profile-container">
+                <img src="https://via.placeholder.com/150" alt="صورة المستخدم" id="user-photo">
+                <div class="username" id="username">اسم المستخدم</div>
+                <div class="user-username" id="user-username">اليوز نيم</div>
+                <div class="user-id" id="user-id" onclick="copyId()">123456789</div>
+            </div>
+        </div>
 
-  <!-- Account Page -->
+        <!-- Account Page -->
         <div id="accountPage" class="screen-content scrollable">
             <div class="invite">
                 <div class="invite-card">
@@ -51,14 +53,14 @@
                 </div>
             </div>
         </div>
-  <!-- Tasks Page -->
+        <!-- Tasks Page -->
         <div id="tasksPage" class="screen-content scrollable">
             <div class="description-taskk">
                 <p class="taskk-title">TASKS & EARNING</p>
             </div>
 
-             <div id="task-earn">
-               <div id="DContainer">
+            <div id="task-earn">
+                <div id="DContainer">
                     <p id="Daily-earning"> Daily earning </p>
                     <div class="daily-itemm animated-element" id="daily2">
                         <i class="fa-regular fa-calendar-check"></i>
@@ -97,39 +99,40 @@
                     <p id="t"> Daily Tasks </p>
                 </section>
             </div>
-       </div>
-</div>
+        </div>
+    </div>
 
-  <nav class="menu">
-            <div class="menu-list">
-                <div class="menu-item-container">
-                    <button data-target="accountPage" class="menu-item">
-                        <div class="icon-wrapper">
-                            <i class="fa-solid fa-user-friends"></i>
-                        </div>
-                    </button>
-                    <span class="menu-label"> </span>
-                </div>
-
-                <div class="menu-item-container">
-                    <button data-target="mainPage" class="menu-item">
-                        <div class="icon-wrapper">
-                            <i class="fa-solid fa-house-chimney"></i>
-                        </div>
-                    </button>
-                    <span class="menu-label"> </span>
-                </div>
-
-                <div class="menu-item-container">
-                    <button data-target="tasksPage" class="menu-item">
-                        <div class="icon-wrapper">
-                            <i class="fa-solid fa-coins"></i>
-                        </div>
-                    </button>
-                    <span class="menu-label"> </span>
-                </div>
+    <nav class="menu">
+        <div class="menu-list">
+            <div class="menu-item-container">
+                <button data-target="accountPage" class="menu-item">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-user-friends"></i>
+                    </div>
+                </button>
+                <span class="menu-label"> </span>
             </div>
-  </nav>
-  <script type="module" src="script.js"></script>
+
+            <div class="menu-item-container">
+                <button data-target="mainPage" class="menu-item">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                </button>
+                <span class="menu-label"> </span>
+            </div>
+
+            <div class="menu-item-container">
+                <button data-target="tasksPage" class="menu-item">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                </button>
+                <span class="menu-label"> </span>
+            </div>
+        </div>
+    </nav>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
