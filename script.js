@@ -287,3 +287,164 @@ async function connectToWallet() {
 tonConnectUI.uiOptions = {
     twaReturnUrl: 'https://t.me/SAWCOIN_BOT/GAME'
 };
+
+
+
+function navigateToScreen(screenId) {
+    if (uiElements.contentScreens) {
+        uiElements.contentScreens.forEach(screen => {
+            screen.classList.remove('active');
+        });
+    }
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) targetScreen.classList.add('active');
+
+    // دائمًا إظهار القائمة السفلية بغض النظر عن الشاشة
+    const footerMenu = document.querySelector('.menu'); // تحديد القائمة السفلية باستخدام الكلاس
+    if (footerMenu) {
+        footerMenu.style.display = 'flex'; // التأكد من أن القائمة السفلية تظهر دائمًا
+    }
+}
+
+///////////////////////////////////////
+
+
+
+ // تحسين عرض قائمة الأصدقاء مع حد أقصى 10 أصدقاء
+async function loadFriendsList() {
+    const userId = uiElements.userTelegramIdDisplay.innerText;
+
+    // عناصر HTML الجديدة
+    const friendsMessage = document.getElementById('friendsMessage');
+    const friendsList = uiElements.friendsListDisplay;
+
+    if (!userId) {
+        console.error("User ID is missing.");
+        friendsMessage.innerText = "Error: Unable to load friends list. Please try again later.";
+        friendsMessage.classList.remove('hidden');
+        friendsList.innerHTML = ''; // مسح القائمة
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('invites')
+            .eq('telegram_id', userId)
+            .single();
+
+        if (error) {
+            console.error('Error fetching friends list:', error.message);
+            friendsMessage.innerText = "Error: Unable to fetch friends at the moment.";
+            friendsMessage.classList.remove('hidden');
+            friendsList.innerHTML = ''; // مسح القائمة
+            return;
+        }
+
+        if (data && data.invites && Array.isArray(data.invites) && data.invites.length > 0) {
+            friendsMessage.classList.add('hidden'); // إخفاء الرسالة
+            friendsList.innerHTML = ''; // مسح القائمة القديمة
+
+            const uniqueInvites = [...new Set(data.invites)];
+            const limitedInvites = uniqueInvites.slice(0, 10);
+
+            const friendsPromises = limitedInvites.map(async (friendId) => {
+                const { data: friendData, error: friendError } = await supabase
+                    .from('users')
+                    .select('telegram_id, balance')
+                    .eq('telegram_id', friendId)
+                    .single();
+
+                if (friendError) {
+                    console.error(`Error fetching data for friend ${friendId}:`, friendError.message);
+                    return null;
+                }
+
+                return friendData;
+            });
+
+            const friendsData = await Promise.all(friendsPromises);
+
+            friendsData.forEach((friend) => {
+                if (friend) {
+                    const li = document.createElement('li');
+                    li.classList.add('friend-item');
+
+                    const img = document.createElement('img');
+                    img.src = 'i/users.jpg';
+                    img.alt = `${friend.telegram_id} Avatar`;
+                    img.classList.add('friend-avatar');
+
+                    const span = document.createElement('span');
+                    span.classList.add('friend-name');
+                    span.textContent = `ID : ${friend.telegram_id}`;
+
+                    const balanceSpan = document.createElement('span');
+                    balanceSpan.classList.add('friend-balance');
+                    balanceSpan.textContent = `${formatNumber(friend.balance)} $SAW`;
+
+                    const friendInfoDiv = document.createElement('div');
+                    friendInfoDiv.classList.add('friend-info');
+                    friendInfoDiv.appendChild(img);
+                    friendInfoDiv.appendChild(span);
+
+                    li.appendChild(friendInfoDiv);
+                    li.appendChild(balanceSpan);
+
+                    friendsList.appendChild(li);
+                }
+            });
+
+            const totalFriendsCount = uniqueInvites.length;
+            document.getElementById('invitedCount').innerText = totalFriendsCount;
+            document.getElementById('settingsInvitedCount').innerText = totalFriendsCount;
+        } else {
+            friendsMessage.innerText = "No friends invited yet.";
+            friendsMessage.classList.remove('hidden');
+            friendsList.innerHTML = ''; // مسح القائمة
+            document.getElementById('invitedCount').innerText = 0;
+            document.getElementById('settingsInvitedCount').innerText = 0;
+        }
+    } catch (err) {
+        console.error("Unexpected error loading friends list:", err);
+        friendsMessage.innerText = "Error: Unexpected issue occurred while loading friends.";
+        friendsMessage.classList.remove('hidden');
+        friendsList.innerHTML = ''; // مسح القائمة
+    }
+ }
+
+
+// نسخ رابط الدعوة
+function copyInviteLink() {
+    const inviteLink = `https://t.me/SAWCOIN_BOT?start=${uiElements.userTelegramIdDisplay?.innerText || ''}`;
+    navigator.clipboard.writeText(inviteLink).then(() => {
+        showNotification(uiElements.copyInviteNotification, 'Invite link copied!');
+    }).catch(err => {
+        showNotification(uiElements.purchaseNotification, 'Failed to copy invite link.');
+    });
+}
+
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './Scripts/config.js';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+// مشاركة الدعوة عبر Telegram
+function openTelegramChat() {
+    const inviteLink = `https://t.me/share/url?text=Join Saw Token Game and earn 5,000 $SAW!&url=https://t.me/SAWCOIN_BOT?start=${uiElements.userTelegramIdDisplay?.innerText || ''}`;
+    window.open(inviteLink, '_blank');
+}
+
+
+function registerEventHandlers() {
+
+    if (uiElements.navButtons) {
+        uiElements.navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetScreen = button.getAttribute('data-target');
+                navigateToScreen(targetScreen);
+            });
+        });
+    }
+} 
+
