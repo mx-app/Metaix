@@ -103,11 +103,7 @@
     margin: 12px 0;
     border-radius: 20px; 
     border-radius: 20px; 
-    /*background-color: #101010;*/
-    background:linear-gradient(135deg,#2D83EC,#101010);
-    border-bottom: 1px solid #1a1a1a;
-    border-left: 1px solid #1a1a1a; 
-    border-right: 1px solid #1a1a1a; 
+    background-color: #181818;
     box-sizing: border-box;
     display: flex; 
     justify-content: center;
@@ -128,7 +124,6 @@
     margin-bottom: 3px; /* إضافة مسافة أسفل الصورة */
     border-radius: 50%;
     margin-left: 10px;
-    border: 1px solid #161616; 
     padding: 2px;
     object-fit: cover;
 }
