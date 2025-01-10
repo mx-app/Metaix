@@ -53,30 +53,24 @@
 
 #mainPage {
     backdrop-filter: blur(3px); 
-    padding-top: 50px; 
+    padding-top: 20px; 
     overflow-y: auto; 
     background-clip: padding-box;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9); /* ظل داخلي لإضافة عمق للحواف */
-}
-
+} 
 
 #tasksPage {
-    padding-top: 80px; /* يمكنك تغيير القيمة حسب الحاجة */
+    padding-top: 20px; /* يمكنك تغيير القيمة حسب الحاجة */
     background-clip: padding-box; /* تأكد من أن الخلفية لا تؤثر على المسافة */
     overflow-y: auto; /* لجعل الصفحة قابلة للتمرير */
     padding-bottom: 100px; /* مسافة سفلية */
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9); /* ظل داخلي لإضافة عمق للحواف */
-}
-
+} 
 
 #accountPage {
-    padding-top: 60px; /* يمكنك تغيير القيمة حسب الحاجة */
+    padding-top: 20px; /* يمكنك تغيير القيمة حسب الحاجة */
     background-clip: padding-box; /* تأكد من أن الخلفية لا تؤثر على المسافة */
     overflow-y: auto; /* لجعل الصفحة قابلة للتمرير */
     padding-bottom: 180px; /* مسافة سفلية */
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9); /* ظل داخلي لإضافة عمق للحواف */
-}
-
+} 
 
 
 
@@ -108,3 +102,65 @@
    animation: popIn 0.4s ease forwards;
 }
 
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8); /* تصغير العنصر بشكل خفيف */
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1); /* تكبير بسيط لإضافة إحساس بالحيوية */
+  }
+  100% {
+    transform: scale(1); /* العودة للحجم الطبيعي */
+  }
+}
+
+/* تأثير الدخول من اليمين */
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* تأثير الدخول من اليسار */
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* تأثير الخروج من اليمين */
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* تأثير الخروج من اليسار */
+@keyframes slideOutLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
