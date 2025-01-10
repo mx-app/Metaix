@@ -1,0 +1,262 @@
+#WrapperFriends {
+  border-radius: 25px;
+  margin: 10px auto;
+  width: 94%;
+  height: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  font-weight: 500; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#icInvitations {
+  color: #fff;
+  font-size: 13px;
+  margin-left: 17px;
+  margin-right: 17px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+#invitedCount {
+  margin-left: 8px;
+}
+
+#refreshIcon {
+  transition: transform 0.5s linear; 
+  margin-left: auto; /* يضع الأيقونة على اليمين */
+  cursor: pointer;
+}
+
+.Invitations-image { 
+    width: 150px;
+    margin: 10px auto;
+    height: auto;
+    display: block;
+}   
+
+.invite {
+    position: relative; /* يتيح التحكم بالموقع داخل الحاوية */
+    margin-left: auto; /* يدفع العنصر إلى أقصى اليمين */
+    margin-right: auto; /* يدفع العنصر إلى أقصى اليسار */
+    width: 90%; /* لضبط العرض لتجنب حدود الشاشة */
+    padding: 8px; 
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+.invite-section {
+    display: flex;
+    justify-content: center; /* يضع الزرين في المنتصف أفقياً */
+    gap: 10px; /* يضبط المسافة بين الزرين */
+    position: relative; /* يتيح التحكم بالموقع داخل الحاوية */
+    margin-left: auto; /* يدفع العنصر إلى أقصى اليمين */
+    margin-right: auto; /* يدفع العنصر إلى أقصى اليسار */
+    width: calc(100% - 40px); /* لضبط العرض لتجنب حدود الشاشة */
+    padding: 10px; /* مساحة داخلية حول الأزرار */
+    z-index: 100;
+    margin-top: 10px;
+}
+
+.invite-image {
+    width: 105px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+} 
+
+.invite-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 0; /* مسافة بين الصورة والنص */
+    flex-shrink: 0;
+}
+
+.copy-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 0; /* مسافة بين الصورة والنص */
+    flex-shrink: 0;
+} 
+
+.invite-icon img, .copy-icon img {
+    vertical-align: middle;
+}
+ 
+
+.friends-list {
+    margin: 10px auto; /* يضبط الهامش العلوي والسفلي بـ 5px ويجعل العنصر في المنتصف أفقيًا */
+    width: 94%; /* العرض المحدد للحاوية */
+    height: auto;
+    list-style: none;
+    color: #808080;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.0002);
+    border-radius: 10px;
+    display: block;
+}
+
+.friends-list li {
+    margin-left: auto; 
+    margin-right: auto;
+    margin-bottom: 10px; 
+}
+
+.invite-more {
+    display: flex;
+    align-items: center; /* توسيط عمودي للصورة والنص */
+    justify-content: center; /* توسيط أفقي */
+    gap: 8px; /* مسافة بين الصورة والنص */
+    width: 90%; 
+    height: 50px;
+    background: #2D83EC;
+    /*border-bottom: 1px solid #1c1c1c;
+    border-right: 1px solid #1c1c1c;*/
+    color: #fff;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.invite-more i {
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
+                 0 -1px 2px rgba(255, 255, 255, 0.5); /* تأثير الظلال للأيقونة */
+} 
+
+.invite-more:hover {
+    background-color: #F7F9FB;
+    color: #000;
+} 
+
+.invite-copy {
+    display: flex;
+    align-items: center; /* توسيط عمودي للصورة والنص */
+    justify-content: center; /* توسيط أفقي */
+    gap: 8px; /* مسافة بين الصورة والنص */
+    width: 25%; 
+    height: 50px;
+    background: #2D83EC;
+    color: #fff;
+    /*border-bottom: 1px solid #1c1c1c;
+    border-right: 1px solid #1c1c1c;*/
+    padding: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+} 
+
+.invite-copy i {
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
+                 0 -1px 2px rgba(255, 255, 255, 0.5); /* تأثير الظلال للأيقونة */
+}   
+ 
+.invite-copy:hover {
+   background-color: #F7F9FB;
+   color: #000;
+} 
+
+/* إضافة تأثير دوران عند النقر */
+#refreshIcon:active {
+    transform: rotate(360deg); /* تأثير دوران كامل */
+}
+
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    /*padding: 10px;*
+   /* margin-bottom: 10px;*/
+    width: 100%;
+    height: 55px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.friend-item:hover {
+    background-color: #101010;
+}
+
+.friend-info {
+    display: flex;
+    align-items: center;
+}
+
+.friend-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+    margin-left: 15px; 
+    border: 0.2px solid #161616;
+}
+
+.friend-name {
+    margin-left: 5px; 
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.friend-balance {
+    margin-right: 15px;
+    font-size: 12px;
+    color: #808080; /* لون مميز للرصيد */
+    font-weight: 500;
+    text-align: right; /* محاذاة الرصيد إلى اليمين */
+}
+
+
+.invite-card {
+  background-color: rgba(0, 0, 0,0.00001);
+  color: #fff;
+  border-radius: 10px;
+  width: 87%;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.invite-header h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  background: linear-gradient(45deg, #2D83EC, #1AC9FF);
+  background-color: transparent;
+  -webkit-background-clip: text; 
+  background-clip: text;
+  color: transparent;
+}
+
+.invite-content p {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 5px 0;
+  font-weight: 500;
+  color: #808080; 
+}
