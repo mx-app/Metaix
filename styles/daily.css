@@ -14,7 +14,7 @@
 } 
 
 .daily-itemm:hover {
-    background: #1a1a1a; /* حدود العنصر */
+    background: #000; /* حدود العنصر */
 }
 
 .reward-img {
@@ -44,13 +44,7 @@
     padding: 10px;
     margin: 10px auto;
     font-size: 0.85rem; 
-    background-color: #101010;
-    /*background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(5px); */
-    border-radius: 20px; /* زوايا مستديرة */
-    border-bottom: 1px solid #1a1a1a;
-    border-left: 1px solid #1a1a1a; 
-    border-right: 1px solid #1a1a1a; 
+    background-color: #181818;
     box-sizing: border-box; /* لحساب الحواف ضمن الأبعاد */
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -160,7 +154,6 @@
     flex-direction: column;  /* وضع النص والصورة عموديًا */
     align-items: center;  /* محاذاة العناصر عموديًا في المنتصف */
     justify-content: flex-start;  /* المحاذاة بداية من الأعلى */
-    border: 1px solid #1a1a1a; 
     border-radius: 20px;
     font-size: 15px;
     padding: 10px;
@@ -189,7 +182,7 @@
 }
  
 .logindaily-content {
-    background-color: #101010; 
+    background-color: #181818; 
     padding: 20px;
     border-radius: 20px 20px 0 0; 
     text-align: center;
@@ -239,7 +232,7 @@
 }
 
 .loginclaim-btn:hover {
-    background-color: #1c1c1c;  /* تغيير اللون عند التمرير فوق الزر */
+    background-color: #000;  /* تغيير اللون عند التمرير فوق الزر */
 } 
 
 #login1 {
