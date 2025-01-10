@@ -20,7 +20,7 @@
       padding: 10px;
       text-align: center;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .profile-container {
@@ -33,25 +33,25 @@
 
     .profile-container img {
       border-radius: 50%;
-      width: 150px;
-      height: 150px;
+      width: 100px;
+      height: 100px;
       object-fit: cover;
       border: 3px solid #181818;
     }
 
     .profile-container .username {
       margin-top: 10px;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .profile-container .user-username {
-      font-size: 18px;
+      font-size: 16px;
       color: #888;
     }
 
     .profile-container .user-id {
       margin-top: 10px;
-      font-size: 16px;
+      font-size: 15px;
       color: #bbb;
       background-color: #181818;
       padding: 5px 10px;
@@ -68,7 +68,7 @@
 <body>
 
 <header>
-  <h1>بروفيل المستخدم</h1>
+  <h1>Profile</h1>
 </header>
 
 <div class="profile-container">
@@ -79,16 +79,22 @@
 </div>
 
 <script>
-  // التأكد من أن المكتبة تعمل
   const tg = window.Telegram.WebApp;
 
-  // عند تحميل الصفحة، جلب بيانات المستخدم
+  // عند تحميل الصفحة
   window.onload = () => {
     const user = tg.initDataUnsafe?.user;
 
     if (user) {
-      // عرض صورة المستخدم
-      document.getElementById('user-photo').src = user.photo_url || "https://via.placeholder.com/150";
+      // التحقق من وجود صورة شخصية
+      if (user.photo_url) {
+        document.getElementById('user-photo').src = user.photo_url;
+      } else {
+        // صورة افتراضية إذا لم يكن هناك صورة شخصية
+        document.getElementById('user-photo').src = "https://via.placeholder.com/150";
+      }
+
+      // عرض الاسم، اليوزرنيم، والأيدي
       document.getElementById('username').textContent = user.first_name || "اسم غير معروف";
       document.getElementById('user-username').textContent = user.username ? `@${user.username}` : "لا يوجد يوزر";
       document.getElementById('user-id').textContent = user.id || "غير معروف";
@@ -105,6 +111,7 @@
     });
   }
 </script>
+
 
 </body>
 </html>
