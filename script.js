@@ -735,6 +735,78 @@ function showBanScreen() {
 
 
 
+// عرض الإشعارات للمستخدم
+function showNotification(notificationElement, message) {
+    if (!notificationElement) return;
+    notificationElement.innerText = message;
+    notificationElement.classList.add('show');
+    setTimeout(() => {
+        notificationElement.classList.remove('show');
+    }, 4000);
+}
+
+function showNotificationWithStatus(notificationElement, message, status = '') {
+    if (!notificationElement) return;
+
+    // مسح الفئات السابقة للفوز أو الخسارة أو الخطأ أو الرسالة
+    notificationElement.classList.remove('win', 'lose', 'error', 'message');
+
+    // إعداد رابط الصورة بناءً على الحالة
+    let imageUrl = '';
+    if (status === 'win') {
+        notificationElement.classList.add('win');
+        imageUrl = 'i/done.png'; // رابط الصورة لحالة الفوز
+
+        // إضافة تأثير القصاصات الورقية للاحتفال
+        showConfettiEffect();
+    } else if (status === 'lose') {
+        notificationElement.classList.add('lose');
+        imageUrl = 'i/mistake.png'; // رابط الصورة لحالة الخسارة
+    } else if (status === 'error') {
+        notificationElement.classList.add('error');
+        imageUrl = 'i/error.png'; // رابط الصورة لحالة الخطأ
+    } else if (status === 'message') {
+        notificationElement.classList.add('message');
+        imageUrl = 'i/message.png'; // رابط الصورة للإشعار العادي
+    }
+
+    // إضافة الصورة مع الرسالة باستخدام innerHTML
+    notificationElement.innerHTML = `<img src="${imageUrl}" class="notification-image" alt=""> ${message}`;
+
+    // إظهار الإشعار
+    notificationElement.classList.add('show');
+
+    // إخفاء الإشعار بعد 4 ثوانٍ
+    setTimeout(() => {
+        notificationElement.classList.remove('show');
+    }, 4000);
+}
+
+// دالة لإظهار تأثير القصاصات الورقية
+function showConfettiEffect() {
+    const duration = 2 * 1000; // مدة التأثير (2 ثانية)
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 7, // عدد الجزيئات في كل دفعة
+            angle: 90,        // زاوية التساقط (عمودية)
+            spread: 160,      // زاوية الانتشار
+            startVelocity: 40, // سرعة البداية
+            gravity: 0.7,     // الجاذبية
+            origin: {
+                x: Math.random(), // انطلاق من أماكن عشوائية
+                y: 0              // البداية من أعلى الشاشة
+            },
+            colors: ['#FF5733', '#FFC300', '#DAF7A6', '#C70039', '#581845']
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
+}
+
 
 
 
