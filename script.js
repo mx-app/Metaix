@@ -10,10 +10,132 @@ const uiElements = {
     friendsListDisplay: document.getElementById('friendsList') || { innerHTML: '' },
     inviteFriendsBtn: document.getElementById('inviteFriendsBtn'),
     copyInviteLinkBtn: document.getElementById('copyInviteLinkBtn'),
-
 };
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const isBanned = await checkAndHandleBan();
+    if (isBanned) return; 
+    await loadGameState(); 
+    await initializeApp();  
+});
 
+
+async function initializeApp() {
+    try {
+        console.log('Initializing app...');
+
+        // جلب بيانات المستخدم من Telegram وSupabase
+        await fetchUserDataFromTelegram();
+
+        // إخفاء شاشة البداية وعرض المحتوى الرئيسي
+         setTimeout(() => {
+       if (uiElements.splashScreen) uiElements.splashScreen.style.display = 'none';
+       if (uiElements.mainContainer) uiElements.mainContainer.style.display = 'flex';
+    }, 2000);
+        
+        // إعداد واجهة المستخدم
+        updateUI();
+        registerEventHandlers();
+        startEnergyRecovery();
+        
+        console.log('App initialized successfully.');
+    } catch (error) {
+        console.error('Error initializing app:', error);
+        showNotification(uiElements.purchaseNotification, 'Failed to initialize app.');
+        if (uiElements.splashScreen) uiElements.splashScreen.style.display = 'none';
+        if (uiElements.mainContainer) uiElements.mainContainer.style.display = 'flex';
+    }
+}
+
+
+
+async function fetchUserDataFromTelegram() {
+    try {
+        const telegramApp = window.Telegram.WebApp;
+        telegramApp.ready();
+
+        const userTelegramId = telegramApp.initDataUnsafe.user?.id;
+        const userTelegramName = telegramApp.initDataUnsafe.user?.username || `user_${userTelegramId}`;
+        const isPremium = telegramApp.initDataUnsafe.user?.is_premium;
+
+        if (!userTelegramId) {
+            throw new Error("Failed to fetch Telegram user ID.");
+        }
+
+        // تحديث واجهة المستخدم
+        uiElements.userTelegramIdDisplay.innerText = userTelegramId;
+        uiElements.userTelegramNameDisplay.innerText = userTelegramName;
+
+        // عرض الاسم المختصر
+        const userNameElement = document.getElementById("userName");
+        if (userNameElement) {
+            const maxLength = 4;
+            const truncatedName = userTelegramName.length > maxLength
+                ? userTelegramName.slice(0, maxLength) + "..."
+                : userTelegramName;
+            userNameElement.innerText = truncatedName;
+        }
+
+        // عرض حالة Premium
+        const premiumStatusElement = document.getElementById('userPremiumStatus');
+        if (premiumStatusElement) {
+            premiumStatusElement.innerHTML = isPremium
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" /><path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" /><path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" /><path d="M8.56 20.31a9 9 0 0 0 3.44 .69" /><path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" /><path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" /><path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" /><path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" /><path d="M9 12l2 2l4 -4" /></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="Error-mark"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>`;
+        }
+
+        // التحقق من تسجيل المستخدم
+        await ensureUserAuthenticationAndDatabase(userTelegramId, userTelegramName);
+    } catch (error) {
+        console.error("Error fetching Telegram user data:", error.message);
+    }
+}
+
+// وظيفة التحقق أو تسجيل المستخدم في المصادقة وقاعدة البيانات
+async function ensureUserAuthenticationAndDatabase(telegramId, userName) {
+    try {
+        const email = `${telegramId}@SawToken.coin`;
+        const password = `password_${telegramId}`;
+
+        // 1. التحقق من وجود المستخدم في نظام المصادقة
+        const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+        
+        if (loginError) {
+            console.log("User not found in auth system. Registering...");
+            // تسجيل المستخدم في المصادقة إذا لم يكن موجودًا
+            const { data: signUpData, error: signUpError } = await supabase.auth.signUp({ email, password });
+            if (signUpError) throw new Error(`Failed to register user: ${signUpError.message}`);
+            console.log("User registered in auth system:", signUpData.user.id);
+        } else {
+            console.log("User logged in successfully:", loginData.user.id);
+        }
+
+        // 2. التحقق من وجود المستخدم في قاعدة البيانات
+        const { data: userData, error: userError } = await supabase
+            .from("users")
+            .select("*")
+            .eq("telegram_id", telegramId)
+            .maybeSingle();
+
+        if (userError) throw new Error(`Error fetching user data: ${userError.message}`);
+
+        // إضافة المستخدم إذا لم يكن موجودًا في قاعدة البيانات
+        if (!userData) {
+            console.log("User not found in database. Adding user...");
+            const { error: insertError } = await supabase
+                .from("users")
+                .insert({ telegram_id: telegramId, username: userName, balance: 0 });
+            if (insertError) throw new Error(`Failed to insert user data: ${insertError.message}`);
+            console.log("User added to database successfully.");
+        } else {
+            console.log("User already exists in database.");
+        }
+
+    } catch (error) {
+        console.error("Error ensuring user authentication and database:", error.message);
+        throw error;
+    }
+}
 
 
 window.onload = () => {
@@ -455,7 +577,6 @@ function openTelegramChat() {
 
 
 function registerEventHandlers() {
-
     if (uiElements.navButtons) {
         uiElements.navButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -466,3 +587,103 @@ function registerEventHandlers() {
     }
 } 
 
+
+
+async function checkAndHandleBan() {
+    const userId = uiElements.userTelegramIdDisplay.innerText;
+
+    try {
+        // جلب حالة الحظر من قاعدة البيانات
+        const { data, error } = await supabase
+            .from('users')
+            .select('is_banned')
+            .eq('telegram_id', userId)
+            .single();
+
+        if (error) {
+            console.error('Error checking ban status:', error.message);
+            return false;
+        }
+
+        if (data?.is_banned) {
+            showBanScreen(); // إذا كان المستخدم محظورًا، عرض شاشة الحظر
+            return true; // المستخدم محظور
+        }
+
+        return false; // المستخدم غير محظور
+    } catch (err) {
+        console.error('Unexpected error while checking ban status:', err);
+        return false;
+    }
+}
+
+
+function showBanScreen() {
+    // إنشاء طبقة تغطي الشاشة بالكامل لمنع التفاعل
+    const overlay = document.createElement('div');
+    overlay.id = 'banOverlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+    `;
+
+    // محتوى شاشة الحظر
+    const content = document.createElement('div');
+    content.style.cssText = `
+        text-align: center;
+        color: white;
+    `;
+
+    const banImage = document.createElement('img');
+    banImage.src = 'i/bloomer.jpg'; // استبدل بمسار الصورة
+    banImage.alt = 'Banned';
+    banImage.style.cssText = 'width: 170px; margin-bottom: 20px;';
+
+    const banMessage = document.createElement('p');
+    banMessage.textContent = 'Your account has been banned for violating policies If you think this is an error please contact support';
+    banMessage.style.cssText = 'font-size: 17px; margin-bottom: 20px;';
+
+    const contactSupport = document.createElement('button');
+    contactSupport.textContent = 'Contact support';
+    contactSupport.style.cssText = `
+        padding: 10px 30px;
+        background-color: #fff;
+        color: #000;
+        border: none;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+    `;
+    contactSupport.onclick = () => {
+        window.location.href = 'https://t.me/X7X_FLASH'; // استبدل بعنوان بريد الدعم
+    };
+
+    content.appendChild(banImage);
+    content.appendChild(banMessage);
+    content.appendChild(contactSupport);
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+
+    // تعطيل التفاعل مع بقية الشاشة
+    document.body.style.overflow = 'hidden';
+}
+
+////////////////////////////////////
+
+
+
+
+
+
+
+
+// تفعيل التطبيق
+initializeApp();
