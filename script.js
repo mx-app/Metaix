@@ -31,3 +31,259 @@ window.onload = () => {
       alert('تم نسخ الأيدي!');
     });
   }
+
+
+// القائمه السفليه
+document.querySelectorAll('button[data-target]').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-target');
+        document.querySelectorAll('.screen-content').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        document.getElementById(targetId).classList.add('active');
+    });
+});
+
+// أولاً: الحصول على جميع الأزرار داخل القائمة
+const buttons = document.querySelectorAll('.menu button');
+
+// ثانياً: إضافة مستمع للأحداث (Event Listener) لكل زر بحيث يستمع للنقرات
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        // عند النقر على زر، يتم إزالة الصف "active" من جميع الأزرار
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // إضافة الصف "active" للزر الذي تم النقر عليه
+        this.classList.add('active');
+        
+        // الحصول على اسم الصفحة أو القسم المستهدف من الزر الذي تم النقر عليه
+        const targetPage = this.getAttribute('data-target');
+        
+        // عرض القسم المناسب
+        document.querySelectorAll('.screen-content').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        document.getElementById(targetPage).classList.add('active');
+    });
+});
+
+// ثالثاً: تفعيل الزر الافتراضي (الصفحة الرئيسية)
+window.addEventListener('DOMContentLoaded', () => {
+    const defaultButton = document.querySelector('button[data-target="mainPage"]'); // افترض أن الصفحة الرئيسية لها data-target="mainPage"
+    if (defaultButton) {
+        defaultButton.classList.add('active'); // تفعيل الزر افتراضياً
+        const defaultScreen = document.getElementById('mainPage'); // افترض أن الصفحة الرئيسية لها ID="mainPage"
+        if (defaultScreen) {
+            defaultScreen.classList.add('active'); // عرض الشاشة المرتبطة افتراضياً
+        }
+    }
+});
+
+
+
+// المهام 
+document.addEventListener('DOMContentLoaded', async () => {
+    const taskContainer = document.querySelector('#taskcontainer');
+    if (!taskContainer) {
+        console.error('Task container element not found.');
+        return;
+    }
+
+    // جلب المهام المكتملة من قاعدة البيانات
+    const userId = uiElements.userTelegramIdDisplay.innerText;
+    let completedTasks = [];
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('completed_tasks')
+            .eq('telegram_id', userId)
+            .single();
+
+        if (error) {
+            console.error('Error fetching completed tasks:', error);
+        } else {
+            completedTasks = data?.completed_tasks || [];
+        }
+    } catch (err) {
+        console.error('Unexpected error while fetching completed tasks:', err);
+    }
+
+    // جلب قائمة المهام من ملف JSON
+    fetch('json/tasks.json')
+        .then(response => response.json())
+        .then(tasks => {
+            tasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.classList.add('task-item');
+
+                // صورة المهمة
+                const img = document.createElement('img');
+                img.src = task.image;
+                img.alt = 'Task Image';
+                img.classList.add('task-img');
+                taskElement.appendChild(img);
+
+                 // Create a container for description and reward
+                const infoContainer = document.createElement('div');
+                infoContainer.classList.add('info-task'); // This will hold both description and reward
+
+                // Task Description
+                const description = document.createElement('p');
+                description.textContent = task.description;
+                infoContainer.appendChild(description);
+
+                 // Task Reward without Coin Image
+                const rewardContainer = document.createElement('div');
+                rewardContainer.classList.add('task-reward-container');
+            
+                const rewardText = document.createElement('span');
+                rewardText.textContent = `+ ${task.reward} $SAW`;
+                rewardText.classList.add('task-reward');
+                rewardContainer.appendChild(rewardText);
+
+                infoContainer.appendChild(rewardContainer); // Append reward below description
+
+                taskElement.appendChild(infoContainer); // Append the info container to the task element
+
+           
+                // زر المهمة
+                const button = document.createElement('button');
+                 button.classList.add('task-button');
+                 button.setAttribute('data-task-id', task.id);
+                 button.setAttribute('data-reward', task.reward);
+
+                 // تعيين نص الزر بناءً على حالة المهمة
+                 if (completedTasks.includes(task.id)) {
+                 // علامة الصح
+                 button.innerHTML = `
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                 </svg>
+                `;
+                 button.disabled = true;
+             } else {
+                // السهم
+                 button.innerHTML = `
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="arrow">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                   </svg>
+                 `;
+                }
+
+               taskElement.appendChild(button);
+               taskContainer.appendChild(taskElement);
+
+                // التعامل مع النقر على الزر
+                let taskProgress = 0;
+
+                button.addEventListener('click', () => {
+                    if (taskProgress === 0) {
+                        showLoading(button);
+                        openTaskLink(task.url, () => {
+                            taskProgress = 1;
+                            hideLoading(button, 'Verify');
+                        });
+                    } else if (taskProgress === 1) {
+                        showLoading(button);
+                        setTimeout(() => {
+                            taskProgress = 2;
+                            hideLoading(button, 'Claim');
+                        }, 5000);
+                    } else if (taskProgress === 2) {
+                        claimTaskReward(task.id, task.reward, button);
+                    }
+                });
+            });
+        })
+        .catch(error => console.error('Error fetching tasks:', error));
+});
+
+// استلام المكافأة وتحديث قاعدة البيانات
+async function claimTaskReward(taskId, reward, button) {
+    try {
+        // التحقق إذا كانت المهمة مكتملة مسبقًا
+        const userId = uiElements.userTelegramIdDisplay.innerText;
+        const { data, error } = await supabase
+            .from('users')
+            .select('completed_tasks')
+            .eq('telegram_id', userId)
+            .single();
+
+        if (error) {
+            console.error('Error fetching completed tasks:', error);
+            return;
+        }
+
+        const completedTasks = data?.completed_tasks || [];
+        if (completedTasks.includes(taskId)) {
+            showNotification(uiElements.purchaseNotification, 'You have already claimed this reward.');
+            return;
+        }
+
+        // إضافة المكافأة إلى الرصيد
+        gameState.balance += reward;
+        completedTasks.push(taskId);
+
+        // تحديث واجهة المستخدم
+        button.textContent = '✓';
+        button.disabled = true;
+        updateUI();
+        showNotificationWithStatus(uiElements.purchaseNotification, `Successfully claimed ${reward} coins!`, 'win');
+
+        // تحديث قاعدة البيانات
+        const updatedData = {
+            balance: gameState.balance,
+            completed_tasks: completedTasks,
+        };
+
+        const { updateError } = await supabase
+            .from('users')
+            .update(updatedData)
+            .eq('telegram_id', userId);
+
+        if (updateError) {
+            console.error('Error updating completed tasks:', updateError);
+        }
+    } catch (error) {
+        console.error('Error claiming task reward:', error);
+    }
+}
+
+// عرض التحميل
+function showLoading(button) {
+    button.innerHTML = `<span class="loading-spinner"></span>`;
+    button.disabled = true;
+}
+
+function hideLoading(button, text) {
+    button.disabled = false;
+    button.innerHTML = text;
+}
+
+// فتح رابط المهمة
+function openTaskLink(taskurl, callback) {
+    if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+        Telegram.WebApp.openLink(taskurl, { try_instant_view: true });
+        setTimeout(callback, 1000);
+    } else {
+        window.open(taskurl, '_blank');
+        setTimeout(callback, 1000);
+    }
+}
+
+
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://sawcoin.vercel.app/json/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect'
+});
+
+async function connectToWallet() {
+    const connectedWallet = await tonConnectUI.connectWallet();
+    // يمكنك تنفيذ بعض العمليات باستخدام connectedWallet إذا لزم الأمر
+    console.log(connectedWallet);
+}
+
+tonConnectUI.uiOptions = {
+    twaReturnUrl: 'https://t.me/SAWCOIN_BOT/GAME'
+};
