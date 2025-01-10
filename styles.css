@@ -15,6 +15,69 @@ button, input, select, textarea, img, a {
     display: none;
 }
 
+.splash-screen {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #101010;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+} 
+
+.splash-title {
+    top: 80%; 
+    font-size: 40px;
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.splash-subtitle {
+    font-size: 20px;
+}
+
+.splash-loading img {
+    top: 30%; 
+    width: 200px;
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; 
+}
+
+.loading-spinnerr {
+    backdrop-filter: blur(5px);
+    border: 7px solid rgba(0, 0, 0, 0.3); /* الحواف الشفافة */
+    border-top: 7px solid #fff; /* اللون الأبيض في الجزء العلوي */
+    border-radius: 50%; /* جعل الشكل دائريًا */
+    width: 55px;
+    height: 55px;
+    animation: spin 2s linear infinite; /* التحريك المستمر */
+}
+
+/* حركة التدوير */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}  
+  
 .screen-content {
     flex: 1;
     display: none;
