@@ -1,3 +1,58 @@
+/* الحاوية للأزرار */
+.buttons-section {
+    width: 90%;
+    margin: auto;
+    height: 30px;
+    background-color: #181818;
+    border-radius: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* زر دعوة الأصدقاء */
+.buttons-more {
+    flex: 1;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 35px 0 0 35px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buttons-more i {
+    margin-right: 8px;
+}
+
+/* زر النسخ */
+.buttons-daily {
+    flex: 1;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 0 35px 35px 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* ضبط الأيقونات داخل الأزرار */
+.buttons-daily i {
+    margin-right: 8px;
+}
+
+/* تأثير عند التمرير فوق الأزرار */
+.buttons-more:hover, .buttons-daily:hover {
+    opacity: 0.9;
+}
+
+
+
+
+
 /* تأثير الضباب والتوهج عند عدم التفعيل */
 .daily-itemm.inactive {
     filter: blur(10px); /* يجعل العنصر ضبابيًا */
