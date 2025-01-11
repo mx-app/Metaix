@@ -87,14 +87,15 @@
     max-width: 400px;
     margin: 7px 0;
     border-radius: 35px; 
-    background-color: #181818;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
     box-sizing: border-box;
     display: flex; 
     justify-content: center;
     align-items: center;
     overflow: hidden;
     position: relative; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }  
 
 .task-item img {
