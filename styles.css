@@ -333,7 +333,7 @@ body {
 
 #balanceAmount::after {
     content: "METIX";
-    font-size: 25px;
+    font-size: 30px;
     position: relative;
     bottom: 0;
     margin-left: 2px;
@@ -347,7 +347,7 @@ body {
 }
 
 .remaining-digits {
-    font-size: 38px;
+    font-size: 40px;
     color: #fff;
     line-height: 1;
 }
