@@ -30,8 +30,9 @@
   width: 94%;
   height: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #181818;
-  font-weight: 500; 
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  font-weight: 400; 
   display: flex;
   justify-content: space-between;
   align-items: center;
