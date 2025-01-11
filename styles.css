@@ -341,16 +341,11 @@ body {
 }
 
 #balanceAmount::before {
-    content: "";
+    content: "METIX"; /* نص بدل الصورة */
     display: inline-block;
-    width: 44px; /* عرض الصورة */
-    height: 44px; /* ارتفاع الصورة */
-    background-image: url('https://image-six-tawny.vercel.app/m.png'); /* رابط الصورة */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; /* تمركز الصورة */
-    margin-right: 2px; /* مسافة بين الصورة والرقم */
-    vertical-align: middle; /* محاذاة الصورة للوسط */
+    font-size: 12px; /* حجم الخط النصي ليكون أصغر من الرقم */
+    vertical-align: bottom; /* محاذاة النص مع أسفل الرقم */
+    margin-left: 5px; /* مسافة بين النص والرقم */
 }
 
 .main-digits {
