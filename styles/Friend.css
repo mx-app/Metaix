@@ -24,17 +24,6 @@
     border-radius: 50%;
 }
 
-.invite-list li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 15px;
-    width: 2px;
-    height: calc(100% - 15px);
-    background-color: #2D83EC;
-}
-
-
 #WrapperFriends {
   border-radius: 35px;
   margin: 10px auto;
