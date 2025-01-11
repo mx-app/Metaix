@@ -85,7 +85,7 @@
     width: 95%;
     height: 60px;
     max-width: 400px;
-    margin: 12px 0;
+    margin: 7px 0;
     border-radius: 35px; 
     background-color: #181818;
     box-sizing: border-box;
@@ -103,7 +103,7 @@
 } 
 
 .task-img {
-    width: 38px;
+    width: 35px;
     height: auto;
     margin-bottom: 3px; /* إضافة مسافة أسفل الصورة */
     border-radius: 50%;
