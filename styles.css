@@ -166,54 +166,33 @@ body {
     }
 }
 
-header {
-    padding: 15px;
-    text-align: center;
-    color: white;
-    font-size: 16px;
-    position: relative;
-}
-
 .profile-container {
+    position: absolute;
+    top: 10px;
+    left: 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 20px;
 }
 
 .profile-container img {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 35px; /* يمكنك تعديل الحجم حسب الحاجة */
+    height: 35px;
     object-fit: cover;
-    border: 3px solid #181818;
+    border: 2px solid #181818;
+    margin-right: 10px; /* مسافة بين الصورة والاسم */
 }
 
 .profile-container .username {
-    margin-top: 10px;
-    font-size: 20px;
-}
-
-.profile-container .user-username {
-    font-size: 16px;
-    color: #888;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000; /* أو أي لون آخر يناسبك */
 }
 
 .profile-container .user-id {
-    margin-top: 10px;
-    font-size: 15px;
-    color: #bbb;
-    background-color: #181818;
-    padding: 5px 10px;
-    border-radius: 30px;
-    cursor: pointer;
-    text-align: center;
+    display: none; /* إخفاء العنصر */
 }
 
-.profile-container .user-id:hover {
-    background-color: #333;
-}
 
 .menu {
     display: flex;
