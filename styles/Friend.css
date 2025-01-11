@@ -81,6 +81,7 @@
     margin-left: auto; /* يدفع العنصر إلى أقصى اليمين */
     margin-right: auto; /* يدفع العنصر إلى أقصى اليسار */
     width: 90%; /* لضبط العرض لتجنب حدود الشاشة */
+    height: auto;
     padding: 8px; 
     border-radius: 35px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
