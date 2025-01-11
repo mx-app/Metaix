@@ -155,6 +155,18 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        // التحقق مما إذا كان التطبيق يعمل داخل بيئة تليجرام
+        function isInTelegramWebApp() {
+            return window.Telegram.WebApp.initDataUnsafe !== undefined;
+        }
+
+        if (!isInTelegramWebApp()) {
+            // إذا لم يكن داخل بيئة تليجرام، إعادة التوجيه إلى صفحة محددة
+            window.location.href = 'https://t.me/SAWCOIN_BOT/GAME';
+        }
+    </script>
     
     <div id="copyInviteNotification" class="notification top-notification">Invite link copied!</div>
     <div id="purchaseNotification" class="notification top-notification"></div>
