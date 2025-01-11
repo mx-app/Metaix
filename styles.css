@@ -186,7 +186,7 @@ body {
 .profile-container .username {
     font-size: 18px;
     font-weight: bold;
-    color: #000; /* أو أي لون آخر يناسبك */
+    color: #888; /* أو أي لون آخر يناسبك */
 }
 
 .profile-container .user-id {
