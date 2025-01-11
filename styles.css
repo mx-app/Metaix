@@ -167,6 +167,9 @@ body {
 }
 
 .profile-container {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 35px;
     position: absolute;
     top: 10px;
     left: 20px;
@@ -193,7 +196,7 @@ body {
     color: #888; /* أو أي لون آخر يناسبك */
 }
 
-.profile-container .user-id {
+.user-id {
     display: none; /* إخفاء العنصر */
 }
 
