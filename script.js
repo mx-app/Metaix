@@ -1,4 +1,5 @@
 const uiElements = {
+    balanceDisplay: document.getElementById('balanceAmount'),
     userTelegramNameDisplay: document.getElementById('userTelegramName'),
     userTelegramIdDisplay: document.getElementById('userTelegramId'),
     purchaseNotification: document.getElementById('purchaseNotification'),
