@@ -82,11 +82,11 @@
     animation: slideInRight 0.4s ease forwards;
 }
 
-#taskcontainer, #daily2, .friend-item, #promocodeBtu, #leaderboardContainer {
+#taskcontainer, .friend-item, #promocodeBtu, #leaderboardContainer {
     animation: slideInLeft 0.4s ease forwards;
 }
 
-#ad {
+#ad, #daily2 {
     animation: slideInRight 0.4s ease forwards;
 }
 
