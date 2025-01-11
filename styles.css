@@ -315,7 +315,8 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    margin-bottom: 40px;
+    margin-top: 30px;
+    margin-bottom: 0;
 }
 
 #balanceAmount {
@@ -323,9 +324,9 @@ body {
     align-items: flex-end; /* محاذاة النص أسفل الرقم */
     justify-content: center;
     color: #fff;
-    font-weight: 400;
+   /* font-weight: 400;
     font-style: normal;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Archivo Black', sans-serif;*/
     gap: 5px; /* مسافة بين الرقم والنص */
     position: relative;
     animation: popIn 0.4s ease forwards;
@@ -393,7 +394,7 @@ body {
     } 
 
 .profile-container .username {
-      margin-top: 10px;
+      margin-top: 20px;
       font-size: 20px;
     }
 
