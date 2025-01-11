@@ -335,7 +335,7 @@ body {
     content: "METIX";
     font-size: 25px;
     position: relative;
-    bottom: -1px;
+    bottom: 0;
     margin-left: 2px;
     text-align: right;
 }
