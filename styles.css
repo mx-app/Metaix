@@ -318,15 +318,6 @@ body {
     margin-bottom: 40px;
 }
 
-.Title {
-    margin-bottom: 5px;
-    margin-top: 0;
-    font-size: 15px;
-    font-weight: 500; 
-    padding-bottom: 1px;
-    color: #808080;
-}
-
 #balanceAmount {
     display: flex;
     align-items: center; /* محاذاة الصورة والنص في نفس الخط */
@@ -340,22 +331,23 @@ body {
     animation: popIn 0.4s ease forwards;
 }
 
-#balanceAmount::before {
+#balanceAmount::after {
     content: "METIX"; /* نص بدل الصورة */
     display: inline-block;
-    font-size: 12px; /* حجم الخط النصي ليكون أصغر من الرقم */
+    font-size: 25px; /* حجم الخط النصي ليكون أصغر من الرقم */
     vertical-align: bottom; /* محاذاة النص مع أسفل الرقم */
     margin-left: 5px; /* مسافة بين النص والرقم */
+    text-align: right; /* جعل النص يظهر من اليمين */
 }
 
 .main-digits {
-    font-size: 37px; 
+    font-size: 40px; 
     color: #fff;
     line-height: 1; /* لضمان التناسق بين النصوص */
 } 
 
 .remaining-digits {
-    font-size: 36px; /* باقي الأرقام بنفس الحجم */
+    font-size: 38px; /* باقي الأرقام بنفس الحجم */
     color: #fff;
     line-height: 1; /* لتقليل الفراغ بين النصوص */
 }
